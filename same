@@ -1,5 +1,11 @@
-import difference from './.difference.js'
-import isEmpty from './isEmpty.js'
+import forEach from './forEach.js'
+import arrayIncludes from './.internal/arrayIncludes.js'
+
+let hasAll = (a1, vals) => {
+    let r = true;
+    forEach(vals, x => r = arrayIncludes(a1, x));
+    return r;
+};
 
 /**
  * Checks if `array` and `values` have all the same items. Duplicate items are ignored.
@@ -20,9 +26,8 @@ import isEmpty from './isEmpty.js'
  * same([2, 4], [1, 2, 3])
  * // => false
  */
-function same(array, values) {
-  return _.isEmpty(_.difference(array, values))
-      && _.isEmpty(_.difference(values, array));
+function same (a1, a2) {
+    return a1.length === a2.length && (a1 === a2 || (hasAll(a1, a2) && hasAll(a2, a1)));
 }
 
 export default same
